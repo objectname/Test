@@ -1,13 +1,8 @@
-name = "private-proxy-test"
+name = "test"
 main = "src/worker.js"
-compatibility_date = "2026-10-01"
+compatibility_date = "2026-10-28"
+preview_urls = false
 
-# Optional but strongly recommended for persistent encrypted cookie storage.
-# Create the KV namespace first, then replace the id below.
-# Run: npx wrangler kv namespace create COOKIE_STORE
 [[kv_namespaces]]
 binding = "COOKIE_STORE"
-id = "REPLACE_WITH_YOUR_KV_NAMESPACE_ID"
-
-# Set this as a Worker secret, not in this file:
-# npx wrangler secret put PROXY_PASSWORD
+id = "a27da9d50b8b48a0a17f6dd03447f2dd"
