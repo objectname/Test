@@ -78,7 +78,7 @@ async function encryptJson(value, password) {
     version: 1,
     algorithm: "AES-GCM",
     kdf: "PBKDF2-SHA256",
-    iterations: 210000,
+    iterations: 100000,
     salt: b64encode(salt),
     iv: b64encode(iv),
     ciphertext: b64encode(encrypted)
