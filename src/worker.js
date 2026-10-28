@@ -262,30 +262,52 @@ function homePage() {
     </p>
   </main>
 
-  <script>
-    async function openSite(event) {
-      event.preventDefault();
+  
+<script>
+  async function openSite(event) {
+    event.preventDefault();
 
-      const status = document.getElementById("status");
-      const url = document.getElementById("url").value;
+    const status = document.getElementById("status");
+    const url = document.getElementById("url").value;
 
-      status.className = "";
-      status.textContent = "Checking blacklist...";
+    status.className = "";
+    status.textContent = "Checking blacklist...";
 
+    // Open immediately during the user's tap so Safari does not block it.
+    const newTab = window.open("about:blank");
+
+    try {
       const response = await fetch("/check?url=" + encodeURIComponent(url));
       const result = await response.json();
 
       if (result.blocked) {
         status.className = "blocked";
         status.textContent = "Blocked: " + result.reason;
+
+        if (newTab) {
+          newTab.close();
+        }
         return;
       }
 
       status.className = "allowed";
       status.textContent = "Opening directly...";
-      window.open(url, "_blank", "noopener");
+
+      if (newTab) {
+        newTab.location.href = url;
+      } else {
+        window.location.href = url;
+      }
+    } catch {
+      status.className = "blocked";
+      status.textContent = "Could not check the blacklist.";
+
+      if (newTab) {
+        newTab.close();
+      }
     }
-  </script>
+  }
+</script>
 </body>
 </html>`;
 
